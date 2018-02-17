@@ -2,7 +2,8 @@
 # Real dependencies
 #
 
-# ...
+# only if you use this with Flask
+Flask
 
 #
 # Development only

@@ -9,3 +9,11 @@ class AttrDict(dict):
 
 
 _nothing = object()
+
+
+def dump_for_mapping(mapping, value):
+    if mapping in (int, str, bool, float):
+        return value
+
+    serializer = getattr(mapping, 'dump', str)
+    return serializer(value)
