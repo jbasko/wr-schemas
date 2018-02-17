@@ -1,0 +1,34 @@
+sudo: false
+
+language: python
+
+matrix:
+  include:
+  - python: 3.6
+    env: TOXENV=py
+  - python: 3.5
+    env: TOXENV=py
+
+install:
+- pip install tox
+- TOX_ENV=${TRAVIS_PYTHON_VERSION/[0-9].[0-9]/py${TRAVIS_PYTHON_VERSION/.}}
+
+script:
+- tox -e $TOX_ENV
+
+before_cache:
+- rm -rf $HOME/.cache/pip/log
+
+cache:
+  directories:
+  - $HOME/.cache/pip
+
+deploy:
+  - provider: pypi
+    user: jbasko
+    password:
+      secure: PLEASE_CONFIGURE_ME
+    on:
+      tags: true
+      branch: master
+      python: 3.6
