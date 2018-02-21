@@ -148,7 +148,7 @@ class Field:
 
     def set_value_in(self, container, value):
         if self.forbidden:
-            raise self.Forbidden(self.name)
+            raise self.Forbidden(self.name, reason='forbidden')
         container[self.name] = value
 
     def load(self, raw_value):

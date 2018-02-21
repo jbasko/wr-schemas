@@ -26,3 +26,19 @@ wr-schemas
     assert payload.date_of_birth is None
 
     print(CreateUser.dump(payload))
+
+
+Flask:
+
+.. code-block:: python
+
+    from wr_schemas import Field, Schema, Mappings
+    from wr_schemas.flask_request import FlaskRequestSchemaMixin
+
+    class CreateUser(Schema, FlaskRequestSchemaMixin):
+        fields = (
+            Field('username', required=True),
+            Field('password', required=True),
+        )
+
+    user = CreateUser().from_request()
