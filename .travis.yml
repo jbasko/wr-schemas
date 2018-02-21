@@ -4,8 +4,6 @@ matrix:
   include:
   - python: 3.6
     env: TOXENV=py
-  - python: 3.5
-    env: TOXENV=py
 install:
 - pip install tox
 - TOX_ENV=${TRAVIS_PYTHON_VERSION/[0-9].[0-9]/py${TRAVIS_PYTHON_VERSION/.}}
