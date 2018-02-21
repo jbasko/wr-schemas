@@ -2,6 +2,37 @@
 wr-schemas
 *****************************
 
+A schema describes:
+
+ 1. a data structure
+ 2. a mapping of one data structure into another
+
+A schema consists of a list of fields.
+
+A field doesn't have a type -- it is a type itself, in a way. Instead of a type, a field has a bi-directional
+mapping. Given two different data structures ``x`` and ``y``, a mapping describes how to calculate ``x.f`` from
+``y.f`` and how to calculate ``y.f`` from ``x.f``.
+
+Fields support following attributes:
+
+ * name
+ * mapping
+ * default
+ * source_name (source_names)
+ * min_len, max_len, auto_trim
+ * min, max
+ * choices
+ * regex
+ * required, forbidden
+ * nullable
+
+Also:
+
+ * Nested fields are supported.
+ * Fields are easy to clone for reuse.
+ * Fields and schemas are easy to reverse.
+ * Schemas are easy to chain.
+
 .. code-block:: python
 
     from wr_schemas import Field, Schema, Mappings
@@ -41,3 +72,4 @@ Flask:
         mixins=[FlaskRequestSchemaMixin],
     )
     user = CreateUser.from_request()
+

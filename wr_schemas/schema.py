@@ -28,15 +28,19 @@ class Schema:
     instance_factory = AttrDict
     fields = ()
 
-    def __new__(cls, *fields, excluding=None, mixins=None):
+    def __new__(cls, *fields, excluding=None, instance_factory=None, mixins=None):
         if mixins:
-            return type(
+            kls = type(
                 '{}+{}'.format(cls.__name__, '_'.join(m.__name__ for m in mixins)),
                 (cls,) + tuple(mixins),
                 {},
-            )()
+            )
+            schema_instance = kls()
         else:
-            return super().__new__(cls)
+            schema_instance = super().__new__(cls)
+
+        schema_instance.instance_factory = instance_factory or cls.instance_factory
+        return schema_instance
 
     def __init__(self, *fields, excluding=None, **kwargs):
         if excluding is None:

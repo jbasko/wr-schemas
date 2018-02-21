@@ -72,3 +72,16 @@ def test_reverse():
     assert serializer.f.weight.dump('60') == 60
 
     assert serializer.dump(serialized) == deserialized
+
+
+def test_instance_factory_on_the_fly():
+    class Person:
+        def __init__(self, name=None, date_of_birth=None):
+            self.name = name
+            self.date_of_birth = date_of_birth
+
+    person_schema = Schema(Field('name'), Field('date_of_birth', mapping=Mappings.date()), instance_factory=Person)
+    person = person_schema.load({'date_of_birth': '1995-10-11'})
+    assert isinstance(person, Person)
+    assert person.name is None
+    assert person.date_of_birth == dt.datetime(1995, 10, 11)
