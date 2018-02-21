@@ -99,3 +99,11 @@ def test_request_extras_override_request_args(flask_app):
         assert user.username == 'user'
         assert user.password == 'RealPassword'
         assert user.dob == dt.datetime(1995, 11, 10)
+
+
+def test_schema_instance_on_the_fly():
+    schema = Schema(Field('username'), Field('password'), mixins=[FlaskRequestSchemaMixin])
+    assert isinstance(schema, Schema)
+    assert isinstance(schema, FlaskRequestSchemaMixin)
+    assert schema.f.username
+    assert schema.f.password

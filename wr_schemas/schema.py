@@ -28,7 +28,17 @@ class Schema:
     instance_factory = AttrDict
     fields = ()
 
-    def __init__(self, *fields, excluding=None):
+    def __new__(cls, *fields, excluding=None, mixins=None):
+        if mixins:
+            return type(
+                '{}+{}'.format(cls.__name__, '_'.join(m.__name__ for m in mixins)),
+                (cls,) + tuple(mixins),
+                {},
+            )()
+        else:
+            return super().__new__(cls)
+
+    def __init__(self, *fields, excluding=None, **kwargs):
         if excluding is None:
             excluding = []
         elif isinstance(excluding, str):
