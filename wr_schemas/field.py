@@ -53,7 +53,7 @@ class Field:
         regex=None,
         source_names=None, source_name=None,
         nullable=True,
-        forbidden=None,
+        forbidden=None
     ):
         from .mappings import Mapping, none_aware_loader_of, none_aware_dumper_of, primitive_types
 
